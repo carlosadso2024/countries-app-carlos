@@ -2,17 +2,32 @@ import { countries } from './countries.js'
 
 const content = document.getElementById('cardContent');
 
-countries.forEach((card) => {
-    const div = document.createElement("div")
-    div.classList.add("country-card")
-    div.innerHTML = `
-            
-        <h2>${card.country}</h2>
-        <p>Capital: ${card.capital}</p>
-        <p>Poblacion: ${card.population}</p>`;
-        
-    content.appendChild(div)
-});
+function createCard(countryCard) {
+    const card = document.createElement('div')
+    card.classList.add('country-card')
+
+    const country = document.createElement('h2')
+    country.textContent = countries.country
+
+    const capital = document.createElement('p')
+    capital.textContent = countries.capital
+
+    const population = document.createElement('p')
+    population.textContent = countries.population
+
+card.appendChild(country)
+card.appendChild(capital)
+card.appendChild(population)
+
+return card
+
+}
+
+countries.forEach(countryCard => {
+    const card = createCard(countryCard);
+    content.appendChild(card);
+  });
+
 
 
 
