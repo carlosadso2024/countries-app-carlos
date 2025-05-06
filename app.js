@@ -1,34 +1,47 @@
-import { countries } from './countries.js'
+import { countries } from './countries.js';
 
 const content = document.getElementById('cardContent');
+const searchInput = document.getElementById('search-input');
 
-function createCard(countryCard) {
-    const card = document.createElement('div')
-    card.classList.add('country-card')
+// Función para crear una tarjeta de país
+function createCard({ country, capital, population }) {
+    const card = document.createElement('div');
+    card.classList.add('country-card');
 
-    const country = document.createElement('h2')
-    country.textContent = countries.country
+    const countryElement = document.createElement('h2');
+    countryElement.textContent = country;
 
-    const capital = document.createElement('p')
-    capital.textContent = countries.capital
+    const capitalElement = document.createElement('p');
+    capitalElement.textContent = `Capital: ${capital}`;
 
-    const population = document.createElement('p')
-    population.textContent = countries.population
+    const populationElement = document.createElement('p');
+    populationElement.textContent = `Población: ${population}`;
 
-card.appendChild(country)
-card.appendChild(capital)
-card.appendChild(population)
-
-return card
-
+    card.append(countryElement, capitalElement, populationElement);
+    return card;
 }
 
-countries.forEach(countryCard => {
-    const card = createCard(countryCard);
-    content.appendChild(card);
-  });
+// Función para mostrar los países en el contenedor
+function displayCountries(countriesToDisplay) {
+    const countryCards = countriesToDisplay.map(createCard);
+    content.replaceChildren(...countryCards);
+}
 
+// Función para filtrar países según el término de búsqueda
+function filterCountries(searchTerm) {
+    return countries.filter(({ country, capital }) =>
+        country.toLowerCase().includes(searchTerm) ||
+        capital.toLowerCase().includes(searchTerm)
+    );
+}
 
+// Inicializar la lista de países al cargar la página
+displayCountries(countries);
 
+// Agregar evento para filtrar mientras se escribe en el input
+searchInput.addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredCountries = filterCountries(searchTerm);
+    displayCountries(filteredCountries);
+});
 
-console.log(countries)
