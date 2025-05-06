@@ -50,6 +50,13 @@ input {
   margin: 10px;
 }
 
+#cardContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .country-card:hover {
   transform: scale(1.03);
 }
